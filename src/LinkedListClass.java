@@ -25,7 +25,7 @@ public class LinkedListClass {
             boolean encoutneredCateogryNode = false;
             while (cursor != null) {
                 LLNode next = cursor.getLink();
-                if(encoutneredCateogryNode == false) {
+                if (encoutneredCateogryNode == false) {
                     encoutneredCateogryNode = isCategoryNodeForName(cursor, node.getName());
                 }
                 if (next == null) {
@@ -75,13 +75,35 @@ public class LinkedListClass {
         LLNode newNode = new LLNode(name, null);
         addNode(newNode);
     }
-    public void removeName(String name)
-    {
 
+    private boolean isCategoryNode(LLNode node) {
+        return (node.getName().length() == 1);
     }
 
-    public void removeCategory(char category)
-    {
+    public void removeName(String name) {
+        LLNode cursor = head;
+        LLNode prev = null;
+        while (cursor.getLink().getLink().getLink().getLink()!= null) {
+            if (name.equals(cursor.getLink().getName())) {
+                if (isCategoryNode(cursor) && isCategoryNode(cursor.getLink().getLink())) {
+                    LLNode temp = cursor.getLink().getLink();
+                    cursor.setLink(null);
+                    prev.setLink(temp);
+                }
+                else{
+                    LLNode temp = cursor.getLink().getLink();
+                    cursor.setLink(null);
+                    cursor.setLink(temp);
+
+                }
+            }
+            prev=cursor;
+            cursor=cursor.getLink();
+
+        }
+    }
+
+    public void removeCategory(char category) {
 
     }
 

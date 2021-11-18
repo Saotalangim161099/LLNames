@@ -4,19 +4,20 @@ public class LLDriver {
         System.out.println("Adding names");
         llC.add("Anna");
         llC.printList();
-        System.out.println("____________________________________");
+//       System.out.println("____________________________________");
         llC.add("Cella");
         llC.printList();
-        System.out.println("____________________________________");
+//       System.out.println("____________________________________");
         llC.add("Abe");
         llC.printList();
-        System.out.println("____________________________________");
+//        System.out.println("____________________________________");
         llC.add("Christian");
         llC.add("Dave");
         llC.add("Tavideeee");
         llC.add("Arthur");
         llC.add("Becca");
         llC.add("Anna");
+        llC.removeName("Dave");
         llC.printList();
         //Abe --> Anna
 //        LLNode node = new LLNode("Anna", null);
