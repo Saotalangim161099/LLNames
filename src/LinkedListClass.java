@@ -43,14 +43,14 @@ public class LinkedListClass {
             head = node;
             return;
         } else {//head is not null
-            if ((node.getInfo().compareTo(head.getInfo())) < 0) {   //node<head
+            if ((node.getName().compareTo(head.getName())) < 0) {   //node<head
                 node.setLink(head);
                 head = node;
             } else {   //node>head
                 LLNode<String> currNode = head.getLink();
                 LLNode<String> prevNode = head;
                 while (currNode != null) {
-                    if ((node.getInfo().compareTo(currNode.getInfo())) < 0) {  //node<currNode
+                    if ((node.getName().compareTo(currNode.getName())) < 0) {  //node<currNode
                         LLNode<String> tempNode = currNode;
                         prevNode.setLink(node);
                         node.setLink(tempNode);
@@ -73,7 +73,7 @@ public class LinkedListClass {
             boolean letterPresent = false;
             LLNode<String> currNode = head;
             while (currNode != null && !letterPresent) {
-                if ((currNode.isLetterNode()) && str.compareTo(currNode.getInfo()) == 0) {
+                if ((currNode.isLetterNode()) && str.compareTo(currNode.getName()) == 0) {
                     letterPresent = true;
                 } else {
                     currNode = currNode.getLink();
@@ -99,7 +99,7 @@ public class LinkedListClass {
         boolean foundName = false;
         LLNode<String> currentNode = new LLNode<>(name, null, false);
         while (currentNode != null && !foundName) {
-            if ((currentNode.getInfo().compareTo(name)) == 0) {
+            if ((currentNode.getName().compareTo(name)) == 0) {
                 foundName = true;
             } else {
                 currentNode = currentNode.getLink();
@@ -112,10 +112,10 @@ public class LinkedListClass {
         LLNode currentNode=head;
         while (currentNode!=null){
             if (currentNode.isLetterNode){
-                System.out.println(currentNode.getInfo());
+                System.out.println(currentNode.getName());
             }
             else{
-                System.out.println(" "+currentNode.getInfo());
+                System.out.println(" "+currentNode.getName());
             }
             currentNode=currentNode.getLink();
         }
@@ -128,7 +128,7 @@ public class LinkedListClass {
     public void printList() {
         LLNode<String> currentNode = head;
         while (currentNode != null) {
-            System.out.println(currentNode.getInfo());
+            System.out.println(currentNode.getName());
             currentNode = currentNode.getLink();
         }
     }

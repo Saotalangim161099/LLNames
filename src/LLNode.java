@@ -17,7 +17,7 @@ public class LLNode<String> {
         isLetterNode = letterNode;
     }
 
-    public String getInfo() {
+    public String getName() {
         return info;
     }
 
