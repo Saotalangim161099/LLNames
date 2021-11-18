@@ -30,11 +30,11 @@ public class LinkedListClass {
                 }
                 if (next == null) {
                     if (encoutneredCateogryNode) {
-                        System.out.println("Creating Name Node");
+
                         node.setLink(next);
                         cursor.setLink(node);
                     } else {
-                        System.out.println("Creating Category Node and Name Node");
+
                         LLNode categoryNode = new LLNode(node.getName().charAt(0) + "", null);
                         categoryNode.setLink(node);
                         cursor.setLink(categoryNode);
@@ -43,11 +43,11 @@ public class LinkedListClass {
                     return;
                 } else if (node.aheadOfNode(next)) {
                     if (encoutneredCateogryNode) {
-                        System.out.println("Creating Name Node 2");
+
                         node.setLink(next);
                         cursor.setLink(node);
                     } else {
-                        System.out.println("Creating Category Node and Name Node 2");
+
                         LLNode categoryNode = new LLNode(node.getName().charAt(0) + "", null);
                         categoryNode.setLink(node);
                         cursor.setLink(categoryNode);
@@ -66,7 +66,7 @@ public class LinkedListClass {
 
     private boolean isCategoryNodeForName(LLNode node, String name) {
         boolean test = node.getName().length() == 1 && node.getName().toLowerCase().charAt(0) == name.toLowerCase().charAt(0);
-        System.out.println("Checking Node " + node.getName() + " - " + name + " - " + test);
+
         return test;
     }
 
@@ -80,27 +80,69 @@ public class LinkedListClass {
         return (node.getName().length() == 1);
     }
 
-    public void removeName(String name) {
-        LLNode cursor = head;
-        LLNode prev = null;
-        while (cursor.getLink().getLink().getLink().getLink()!= null) {
-            if (name.equals(cursor.getLink().getName())) {
-                if (isCategoryNode(cursor) && isCategoryNode(cursor.getLink().getLink())) {
-                    LLNode temp = cursor.getLink().getLink();
-                    cursor.setLink(null);
-                    prev.setLink(temp);
-                }
-                else{
-                    LLNode temp = cursor.getLink().getLink();
-                    cursor.setLink(null);
-                    cursor.setLink(temp);
+    /*   public void removeName(String name) {
+           LLNode cursor = head;
+           LLNode prev = null;
+           while (cursor.getLink().getLink().getLink().getLink()!= null) {
+               if (name.equals(cursor.getLink().getName())) {
+                   if (isCategoryNode(cursor) && isCategoryNode(cursor.getLink().getLink())) {
+                       LLNode temp = cursor.getLink().getLink().getLink();
+                       cursor.setLink(null);
+                       prev.setLink(temp);
+                   }
+                   else{
+                       LLNode temp = cursor.getLink().getLink();
+                       cursor.setLink(null);
+                       cursor.setLink(temp);
 
+                   }
+               }
+               prev=cursor;
+               cursor=cursor.getLink();
+
+           }
+       } */
+    public void removeName(String name) {
+        if (head == null) {
+            return;
+        } else {
+            LLNode previous = head;
+            LLNode current = head.getLink();
+            while (current != null) {
+                if ((current.getName().compareTo(name)) == 0) {
+                    LLNode next = current.getLink();
+                    //current.setLink(null);
+                    previous.setLink(next);
+                    return;
+                }
+                previous = current;
+                current = current.getLink();
+            }
+        }
+    }
+    public void removeCategoryNode(){
+            LLNode previousNode = head;
+            LLNode currentNode = head.getLink();
+            LLNode prevOfPrev = null;
+            while (currentNode != null) {
+                if (isCategoryNode(previousNode) && isCategoryNode(currentNode)) {
+                    if (prevOfPrev == null) {
+                        head = currentNode;
+                        return;
+                    } else {
+                        prevOfPrev.setLink(currentNode);
+                        return;
+
+                    }
+                } else if (isCategoryNode(currentNode) && currentNode.getLink() == null) {
+                    previousNode.setLink(null);
+                    return;
+                } else {
+                    prevOfPrev = previousNode;
+                    previousNode = currentNode;
+                    currentNode = currentNode.getLink();
                 }
             }
-            prev=cursor;
-            cursor=cursor.getLink();
-
-        }
     }
 
     public void removeCategory(char category) {
