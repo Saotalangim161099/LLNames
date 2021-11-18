@@ -1,35 +1,33 @@
-public class LLNode<String> {
-    protected String info;
-    protected LLNode<String> link;
-    protected boolean isLetterNode;
+public class LLNode{
 
-    public LLNode(String info,LLNode link, boolean isLetterNode) {
-        this.info = info;
+    //Attributes
+    protected String name;
+    protected LLNode link;
+
+    //Constructor
+    public LLNode(String name, LLNode link) {
+        this.name = name;
         this.link = link;
-        this.isLetterNode=isLetterNode;
     }
 
-    public boolean isLetterNode() {
-        return isLetterNode;
-    }
-
-    public void setLetterNode(boolean letterNode) {
-        isLetterNode = letterNode;
-    }
-
+    //Getters & Setters
     public String getName() {
-        return info;
+        return name;
     }
 
-    public void setInfo(String info) {
-        this.info = info;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public LLNode<String> getLink() {
+    public LLNode getLink() {
         return link;
     }
 
-    public void setLink(LLNode<String> link) {
+    public void setLink(LLNode link) {
         this.link = link;
+    }
+    public boolean aheadOfNode(LLNode next)
+    {
+       return this.getName().compareTo(next.getName()) < 0;
     }
 }
