@@ -1,3 +1,7 @@
+import java.util.Locale;
+
+//REMEMBER: AFTER COMPLETING EACH CASE, TERMINATING IT BY "RETURN;"
+//****************************************************************
 public class LinkedListClass {
     public LLNode head;
 
@@ -7,20 +11,19 @@ public class LinkedListClass {
 
     public void addNode(LLNode node) {
         if (head == null) {
-            //Add letter category Node, set link
-            LLNode categoryNode = new LLNode(node.getName().charAt(0) + "", null);
-            categoryNode.setLink(node);
+            LLNode categoryNode = new LLNode(node.getName().substring(0, 1), node);
             head = categoryNode;
+            return;
         } else {
             //iterate the linked list to find when comparisionTo resulting in == -1
             LLNode cursor = head;
             if (node.aheadOfNode(cursor)) {
-                LLNode categoryNode = new LLNode(node.getName().charAt(0) + "", null);
-                categoryNode.setLink(node);
+                LLNode categoryNode = new LLNode(node.getName().substring(0, 1), node);
                 node.setLink(cursor);
                 head = categoryNode;
                 return;
             }
+
 
             boolean encoutneredCateogryNode = false;
             while (cursor != null) {
@@ -30,26 +33,21 @@ public class LinkedListClass {
                 }
                 if (next == null) {
                     if (encoutneredCateogryNode) {
-
-                        node.setLink(next);
                         cursor.setLink(node);
+                        node.setLink(next);
                     } else {
-
-                        LLNode categoryNode = new LLNode(node.getName().charAt(0) + "", null);
-                        categoryNode.setLink(node);
+                        LLNode categoryNode = new LLNode(node.getName().substring(0, 1), node);
                         cursor.setLink(categoryNode);
                         node.setLink(next);
                     }
                     return;
+
                 } else if (node.aheadOfNode(next)) {
                     if (encoutneredCateogryNode) {
-
-                        node.setLink(next);
                         cursor.setLink(node);
+                        node.setLink(next);
                     } else {
-
-                        LLNode categoryNode = new LLNode(node.getName().charAt(0) + "", null);
-                        categoryNode.setLink(node);
+                        LLNode categoryNode = new LLNode(node.getName().substring(0, 1), node);
                         cursor.setLink(categoryNode);
                         node.setLink(next);
                     }
@@ -65,8 +63,7 @@ public class LinkedListClass {
     }
 
     private boolean isCategoryNodeForName(LLNode node, String name) {
-        boolean test = node.getName().length() == 1 && node.getName().toLowerCase().charAt(0) == name.toLowerCase().charAt(0);
-
+        boolean test = ((node.getName().length() == 1) && (node.getName().toLowerCase().charAt(0) == name.toLowerCase().charAt(0)));
         return test;
     }
 
@@ -92,6 +89,7 @@ public class LinkedListClass {
         }
         head = prev;
     }
+
 
     /*   public void removeName(String name) {
            LLNode cursor = head;
@@ -139,39 +137,70 @@ public class LinkedListClass {
 
     //head-normal-tail
     public void removeCategoryNode() {
-        LLNode prevOfPrev = null;
-        LLNode previous = head;
-        LLNode current = head.getLink();
-        while (current != null) {
-            if (isCategoryNode(previous) && isCategoryNode(current)) {
-                if (prevOfPrev == null) {
-                    head = current;
+        LLNode previous = null;
+        LLNode current = head;
+        LLNode next = head.getLink();
+        while (next != null) {
+            if (isCategoryNode(current) && isCategoryNode(next)) {
+                if (previous == null) {
+                    head = next;
                     return;
                 } else {
-                    prevOfPrev.setLink(current);
+                    LLNode nextOfNext = next;
+                    previous.setLink(nextOfNext);
                     return;
                 }
-            } else if (isCategoryNode(current) && isCategoryNode(current.getLink())) {
+            } else if (isCategoryNode(current) && current.getLink() == null) {
                 previous.setLink(null);
                 return;
             } else {
-                prevOfPrev = previous;
+                previous = current;
+                current = next;
+                next = next.getLink();
+            }
+        }
+    }
+
+    public void removeCategory(String letter) {
+        if (head == null) {
+            return;
+        }
+        if (head.getName().compareTo(letter)==0){
+            LLNode next=head.getLink();
+            while (next!=null){
+                if (next.getName().substring(0,1).compareTo(letter)==0){
+                    next=next.getLink();
+                }
+                else{
+                    head=next;
+                    return;
+                }
+            }
+        }
+
+        LLNode previous = head;
+        LLNode current = head.getLink();
+        while (current != null) {
+            if (letter.compareTo(current.getName().substring(0, 1)) == 0) {
+                LLNode nextOfNext = current.getLink();
+                previous.setLink(nextOfNext);
+                current = nextOfNext;
+            } else {
                 previous = current;
                 current = current.getLink();
             }
         }
     }
 
-    public void removeCategory(char category) {
-
-    }
 
     public boolean find(String name) {
         boolean foundName = false;
-        LLNode currentNode = new LLNode(name, null);
-        while (currentNode != null && !foundName) {
-            if ((currentNode.getName().compareTo(name)) == 0) {
+        LLNode currentNode = head;
+        while (currentNode != null && foundName == false) {
+            if ((currentNode.getName().equalsIgnoreCase(name))) {
                 foundName = true;
+                break;
+
             } else {
                 currentNode = currentNode.getLink();
             }
@@ -185,6 +214,14 @@ public class LinkedListClass {
         while (currentNode != null) {
             System.out.println(currentNode.getName());
             currentNode = currentNode.getLink();
+        }
+    }
+
+    public void printAlternate() {
+        LLNode currentNode = head;
+        while (currentNode.getLink() != null) {
+            System.out.println(currentNode.getName());
+            currentNode = currentNode.getLink().getLink();
         }
     }
 
